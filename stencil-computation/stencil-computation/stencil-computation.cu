@@ -1,3 +1,12 @@
+/*
+ * Task List
+ *
+ * 1) Optimize CUDA implementation.
+ * 2) Make a serial CPU implementation (in same file).
+ * 3) Make an OpenMP parallel implementation (in same file).
+ * 4) Do a speedup analysis of parallel vs serial implementations.
+ */
+
 #include <stdio.h>
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
@@ -27,8 +36,8 @@ int main() {
 	cudaDeviceSynchronize();
 
 	//Print out state of the grid
-	printGrid(grid, "filled");
-	printf("\n\n");
+	printGrid(grid, "input");
+	printf("\n");
 
 	//Allocate memory for the resulting grid
 	int* result;
