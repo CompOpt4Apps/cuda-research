@@ -2,7 +2,7 @@
  * Task List
  *
  * 1) Optimize CUDA implementation.
- * 2) Make a serial CPU implementation (in same file).
+ * 2) Make a serial CPU implementation.
  * 3) Make an OpenMP parallel implementation (in same file).
  * 4) Do a speedup analysis of parallel vs serial implementations.
  */
@@ -83,10 +83,10 @@ __global__ void computeGrid(int* grid, int* result) {
 	}
 
 	//Gets each of the neighbor's values
-	int north = y == 0 ? 0 : *(grid + THREAD_DIM * (y - 1) + x);
-	int south = y == THREAD_DIM - 1 ? 0 : *(grid + THREAD_DIM * (y + 1) + x);
-	int west = x == 0 ? 0 : *(grid + THREAD_DIM * y + x - 1);
-	int east = x == THREAD_DIM - 1 ? 0 : *(grid + THREAD_DIM * y + x + 1);
+	int north = *(grid + THREAD_DIM * (y - 1) + x);
+	int south = *(grid + THREAD_DIM * (y + 1) + x);
+	int west = *(grid + THREAD_DIM * y + x - 1);
+	int east = *(grid + THREAD_DIM * y + x + 1);
 
 	//Put the sum of the neighbors in the result
 	*(result + THREAD_DIM * y + x) = north + south + west + east;
