@@ -16,7 +16,7 @@ int main() {
 	fillGrid(grid);
 
 	//Print out state of the grid
-	printGrid(grid, "input");
+	printGrid(grid, "Filled");
 	printf("\n");
 
 	//Allocate memory for the resulting grid
@@ -26,7 +26,7 @@ int main() {
 	computeGrid(grid, result);
 
 	//Print out the resulting grid
-	printGrid(result, "result");
+	printGrid(result, "Result");
 
 	//Frees the memory used by the grids
 	free(grid);
