@@ -69,7 +69,7 @@ void computeGrid(int* grid, int* result) {
 
 //Prints out the state of the internal grid (can also print entire grid)
 void printGrid(int* grid, char* name) {
-	printf("<<< State of the grid \"%s\" >>>\n\n", name);
+	printf("<<< %s >>>\n\n", name);
 
 	for (int y = 1; y < SIZE - 1; y++) {
 		for (int x = 1; x < SIZE - 1; x++) {
