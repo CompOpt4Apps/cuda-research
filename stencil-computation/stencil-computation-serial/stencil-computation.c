@@ -1,6 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define SIZE 20		//The size of the entire grid, including the outer edges
+#define SIZE 20			//The size of the entire grid, including the outer edges
 
 //Prototypes
 void fillGrid(int* grid);
@@ -60,13 +61,8 @@ void fillGrid(int* grid) {
 void computeGrid(int* grid, int* result) {
 	for (int y = 1; y < SIZE - 1; y++) {
 		for (int x = 1; x < SIZE - 1; x++) {
-			//Gets each of the neighbor's values
-			int north = *(grid + SIZE * (y - 1) + x);
-			int south = *(grid + SIZE * (y + 1) + x);
-			int west = *(grid + SIZE * y + x - 1);
-			int east = *(grid + SIZE * y + x + 1);
-
-			*(result + SIZE * y + x) = north + south + west + east;
+			//Gets each of the neighbor's values, add them together
+			*(result + SIZE * y + x) = *(grid + SIZE * (y - 1) + x) + *(grid + SIZE * (y + 1) + x) + *(grid + SIZE * y + x - 1) + *(grid + SIZE * y + x + 1);
 		}
 	}
 }

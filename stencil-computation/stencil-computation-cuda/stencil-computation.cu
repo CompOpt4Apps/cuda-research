@@ -31,24 +31,24 @@ int main() {
 	int* grid;
 	cudaMallocManaged(&grid, THREAD_DIM * THREAD_DIM * sizeof(int));
 
-	//Fill in the grid
+	//Fill in the grid, record time elapsed
 	fillGrid<<<dim3(GRID_DIM, GRID_DIM), dim3(BLOCK_DIM, BLOCK_DIM)>>>(grid);
 	cudaDeviceSynchronize();
 
 	//Print out state of the grid
-	printGrid(grid, "input");
+	printGrid(grid, "Filled");
 	printf("\n");
 
 	//Allocate memory for the resulting grid
 	int* result;
 	cudaMallocManaged(&result, THREAD_DIM * THREAD_DIM * sizeof(int));
 
-	//Compute the resulting grid
+	//Compute the resulting grid, record time elapsed
 	computeGrid<<<dim3(GRID_DIM, GRID_DIM), dim3(BLOCK_DIM, BLOCK_DIM)>>>(grid, result);
 	cudaDeviceSynchronize();
 
-	//Print out the resulting grid
-	printGrid(result, "result");
+	//Print out the resulting grid and timing results
+	printGrid(result, "Result");
 
 	//Frees the memory used by the grids
 	cudaFree(grid);
@@ -78,23 +78,16 @@ __global__ void computeGrid(int* grid, int* result) {
 
 	//If along the edges of the grid, don't add neighbors
 	if (x == 0 || y == 0 || x == THREAD_DIM - 1 || y == THREAD_DIM - 1) {
-		*(result + THREAD_DIM * y + x) = 0;
 		return;
 	}
 
-	//Gets each of the neighbor's values
-	int north = *(grid + THREAD_DIM * (y - 1) + x);
-	int south = *(grid + THREAD_DIM * (y + 1) + x);
-	int west = *(grid + THREAD_DIM * y + x - 1);
-	int east = *(grid + THREAD_DIM * y + x + 1);
-
 	//Put the sum of the neighbors in the result
-	*(result + THREAD_DIM * y + x) = north + south + west + east;
+	*(result + THREAD_DIM * y + x) = *(grid + THREAD_DIM * (y - 1) + x) + *(grid + THREAD_DIM * (y + 1) + x) + *(grid + THREAD_DIM * y + x - 1) + *(grid + THREAD_DIM * y + x + 1);
 }
 
 //Prints out the state of the internal grid (can also print entire grid)
 void printGrid(int* grid, char* name) {
-	printf("<<< State of the grid \"%s\" >>>\n\n", name);
+	printf("<<< %s >>>\n\n", name);
 
 	for (int y = 1; y < THREAD_DIM - 1; y++) {
 		for (int x = 1; x < THREAD_DIM - 1; x++) {
