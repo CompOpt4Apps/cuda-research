@@ -8,25 +8,24 @@ void fillGrid(int* grid);
 void computeGrid(int* grid, int* result);
 void printGrid(int* grid, char* name);
 
+static int createOutput = 0;
+
 int main() {
-	//Allocate memory for the grid (1D array)
+	//Allocate memory for the grid (1D array) and the result grid
 	int* grid = malloc(SIZE * SIZE * sizeof(int));
-
-	//Fill in the grid
-	fillGrid(grid);
-
-	//Print out state of the grid
-	printGrid(grid, "Filled");
-	printf("\n");
-
-	//Allocate memory for the resulting grid
 	int* result = malloc(SIZE * SIZE * sizeof(int));
 
-	//Compute the resulting grid
+	//Fill in the grid and compute the result
+	fillGrid(grid);
 	computeGrid(grid, result);
 
-	//Print out the resulting grid
-	printGrid(result, "Result");
+	//If output is enabled, do so
+	if (createOutput) {
+		//Print out state of the filled and result grids
+		printGrid(grid, "Filled");
+		printf("\n");
+		printGrid(result, "Result");		
+	}
 
 	//Frees the memory used by the grids
 	free(grid);

@@ -1,12 +1,3 @@
-/*
- * Task List
- *
- * 1) Optimize CUDA implementation.
- * 2) Make a serial CPU implementation.
- * 3) Make an OpenMP parallel implementation (in same file).
- * 4) Do a speedup analysis of parallel vs serial implementations.
- */
-
 #include <stdio.h>
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
@@ -20,6 +11,8 @@ __global__ void fillGrid(int* grid);
 __global__ void computeGrid(int* grid, int* result);
 void printGrid(int* grid);
 
+static int createOutput = 0;
+
 int main() {
 	//Check for errors in grid size definitions
 	if (THREAD_DIM % GRID_DIM != 0) {
@@ -27,30 +20,24 @@ int main() {
 		return 1;
 	}
 
-	//Allocate memory for the grid (1D array)
+	//Allocate memory for the grid (1D array) and the result grid
 	int* grid;
-	cudaMallocManaged(&grid, THREAD_DIM * THREAD_DIM * sizeof(int));
-
-	//Fill in the grid, record time elapsed
-	fillGrid<<<dim3(GRID_DIM, GRID_DIM), dim3(BLOCK_DIM, BLOCK_DIM)>>>(grid);
-	cudaDeviceSynchronize();
-
-	//Print out state of the grid
-	printf("<<< Filled >>>\n\n");
-	printGrid(grid);
-	printf("\n");
-
-	//Allocate memory for the resulting grid
 	int* result;
+	cudaMallocManaged(&grid, THREAD_DIM * THREAD_DIM * sizeof(int));
 	cudaMallocManaged(&result, THREAD_DIM * THREAD_DIM * sizeof(int));
 
-	//Compute the resulting grid, record time elapsed
-	computeGrid<<<dim3(GRID_DIM, GRID_DIM), dim3(BLOCK_DIM, BLOCK_DIM)>>>(grid, result);
+	//Fill in the grid and compute the result
+	fillGrid<<<dim3(GRID_DIM, GRID_DIM), dim3(BLOCK_DIM - 1, BLOCK_DIM - 1)>>>(grid);
+	cudaDeviceSynchronize();
+	computeGrid<<<dim3(GRID_DIM, GRID_DIM), dim3(BLOCK_DIM - 1, BLOCK_DIM - 1)>>>(grid, result);
 	cudaDeviceSynchronize();
 
-	//Print out the resulting grid and timing results
-	printf("<<< Result >>>\n\n");
-	printGrid(result);
+	if (createOutput) {
+		//Print out state of the filled and result grids
+		printGrid(grid, "Filled");
+		printf("\n");
+		printGrid(result, "Result");
+	}
 
 	//Frees the memory used by the grids
 	cudaFree(grid);
@@ -88,7 +75,9 @@ __global__ void computeGrid(int* grid, int* result) {
 }
 
 //Prints out the state of the internal grid (can also print entire grid)
-void printGrid(int* grid) {
+void printGrid(int* grid, char* name) {
+	printf("<<< %s >>>\n\n", name);
+
 	for (int y = 1; y < THREAD_DIM - 1; y++) {
 		for (int x = 1; x < THREAD_DIM - 1; x++) {
 			printf("%-10d", *(grid + THREAD_DIM * y + x));

@@ -9,25 +9,24 @@ void fillGrid(int* grid);
 void computeGrid(int* grid, int* result);
 void printGrid(int* grid, char* name);
 
+static int createOutput = 0;
+
 int main() {
-	//Allocate memory for the grid (1D array)
+	//Allocate memory for the grid (1D array) and the result grid
 	int* grid = malloc(SIZE * SIZE * sizeof(int));
-
-	//Fill in the grid
-	fillGrid(grid);
-
-	//Print out state of the grid
-	printGrid(grid, "Filled");
-	printf("\n");
-
-	//Allocate memory for the resulting grid
 	int* result = malloc(SIZE * SIZE * sizeof(int));
 
-	//Compute the resulting grid
+	//Fill in the grid and compute the result
+	fillGrid(grid);
 	computeGrid(grid, result);
 
-	//Print out the resulting grid
-	printGrid(result, "Result");
+	//If output is enabled, do so
+	if (createOutput) {
+		//Print out state of the filled and result grids
+		printGrid(grid, "Filled");
+		printf("\n");
+		printGrid(result, "Result");
+	}
 
 	//Frees the memory used by the grids
 	free(grid);
@@ -53,7 +52,7 @@ void fillGrid(int* grid) {
 	}
 
 	//Fills in each spot of the grid with a cells product of its x and y position
-	#pragma omp parallel for
+	#pragma omp parallel for collapse(2)
 	for (int y = 1; y < SIZE - 1; y++) {
 		for (int x = 1; x < SIZE - 1; x++) {
 			*(grid + SIZE * y + x) = x * y;
@@ -63,9 +62,8 @@ void fillGrid(int* grid) {
 
 //Computes the result grid by adding all neighbors
 void computeGrid(int* grid, int* result) {
-	#pragma omp parallel for
+	#pragma omp parallel for collapse(2)
 	for (int y = 1; y < SIZE - 1; y++) {
-		#pragma omp parallel for
 		for (int x = 1; x < SIZE - 1; x++) {
 			//Gets each of the neighbor's values, add them together
 			*(result + SIZE * y + x) = *(grid + SIZE * (y - 1) + x) + *(grid + SIZE * (y + 1) + x) + *(grid + SIZE * y + x - 1) + *(grid + SIZE * y + x + 1);
