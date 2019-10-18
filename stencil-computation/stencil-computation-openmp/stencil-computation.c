@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 
 #define SIZE 20		//The size of the entire grid, including the outer edges
 
@@ -38,18 +39,21 @@ int main() {
 //Fills in the grid based on a thread's position in the grid
 void fillGrid(int* grid) {
 	//Fills in the top and bottom rows
+	#pragma omp parallel for
 	for (int x = 0; x < SIZE; x++) {
 		*(grid + x) = 0;
 		*(grid + SIZE * (SIZE - 1) + x) = 0;
 	}
 
 	//Fills in the leftmost and rightmost columns
+	#pragma omp parallel for
 	for (int y = 0; y < SIZE; y++) {
 		*(grid + SIZE * y) = 0;
 		*(grid + SIZE * y + SIZE - 1) = 0;
 	}
 
 	//Fills in each spot of the grid with a cells product of its x and y position
+	#pragma omp parallel for
 	for (int y = 1; y < SIZE - 1; y++) {
 		for (int x = 1; x < SIZE - 1; x++) {
 			*(grid + SIZE * y + x) = x * y;
@@ -59,7 +63,9 @@ void fillGrid(int* grid) {
 
 //Computes the result grid by adding all neighbors
 void computeGrid(int* grid, int* result) {
+	#pragma omp parallel for
 	for (int y = 1; y < SIZE - 1; y++) {
+		#pragma omp parallel for
 		for (int x = 1; x < SIZE - 1; x++) {
 			//Gets each of the neighbor's values, add them together
 			*(result + SIZE * y + x) = *(grid + SIZE * (y - 1) + x) + *(grid + SIZE * (y + 1) + x) + *(grid + SIZE * y + x - 1) + *(grid + SIZE * y + x + 1);

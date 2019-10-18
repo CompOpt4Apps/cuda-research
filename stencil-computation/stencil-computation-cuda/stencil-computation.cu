@@ -18,7 +18,7 @@
 //Prototypes
 __global__ void fillGrid(int* grid);
 __global__ void computeGrid(int* grid, int* result);
-void printGrid(int* grid, char* name);
+void printGrid(int* grid);
 
 int main() {
 	//Check for errors in grid size definitions
@@ -36,7 +36,8 @@ int main() {
 	cudaDeviceSynchronize();
 
 	//Print out state of the grid
-	printGrid(grid, "Filled");
+	printf("<<< Filled >>>\n\n");
+	printGrid(grid);
 	printf("\n");
 
 	//Allocate memory for the resulting grid
@@ -48,7 +49,8 @@ int main() {
 	cudaDeviceSynchronize();
 
 	//Print out the resulting grid and timing results
-	printGrid(result, "Result");
+	printf("<<< Result >>>\n\n");
+	printGrid(result);
 
 	//Frees the memory used by the grids
 	cudaFree(grid);
@@ -86,9 +88,7 @@ __global__ void computeGrid(int* grid, int* result) {
 }
 
 //Prints out the state of the internal grid (can also print entire grid)
-void printGrid(int* grid, char* name) {
-	printf("<<< %s >>>\n\n", name);
-
+void printGrid(int* grid) {
 	for (int y = 1; y < THREAD_DIM - 1; y++) {
 		for (int x = 1; x < THREAD_DIM - 1; x++) {
 			printf("%-10d", *(grid + THREAD_DIM * y + x));
