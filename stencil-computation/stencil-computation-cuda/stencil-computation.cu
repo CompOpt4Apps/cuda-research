@@ -3,15 +3,16 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-#define THREAD_DIM 20
+#define THREAD_DIM 12
 #define GRID_DIM 4
 #define BLOCK_DIM (THREAD_DIM / GRID_DIM)
 #define MEM_SIZE (sizeof(int) * THREAD_DIM * THREAD_DIM)
-#define TIME_STEPS 100
+#define TIME_STEPS 100000
 
 void fillGrid(int* grid);
 __global__ void computeGrid(int* read, int* write);
 void swapGrids(int** read, int** write);
+void printGrid(int* grid, int skip, const char* name);
 
 int main() {
 	//Check for errors in grid size definitions
@@ -20,9 +21,12 @@ int main() {
 		return 1;
 	}
 
-	//Allocates space on the host for the grids
-	int* hostRead = (int*)malloc(MEM_SIZE);
-	int* hostWrite = (int*)malloc(MEM_SIZE);
+	//Allocates space on the host for the grids in pinned memory
+	//Using pinned memory is much faster, only being limited by the speed of the PCI-E bus
+	int* hostRead;
+	int* hostWrite;
+	cudaMallocHost((void**) &hostRead, MEM_SIZE);
+	cudaMallocHost((void**) &hostWrite, MEM_SIZE);
 
 	//Fills in the read grid serially
 	fillGrid(hostRead);
@@ -38,16 +42,18 @@ int main() {
 	dim3 gridDimension(GRID_DIM, GRID_DIM);
 	dim3 blockDimension(BLOCK_DIM, BLOCK_DIM);
 	for (int i = 0; i < TIME_STEPS; i++) {
-		computeGrid << <gridDimension, blockDimension >> > (deviceRead, deviceWrite);
+		computeGrid<<<gridDimension, blockDimension>>>(deviceRead, deviceWrite);
+		cudaDeviceSynchronize();
 		swapGrids(&deviceRead, &deviceWrite);
 	}
 
 	//Copies over the result (now in deviceRead) from device to host
 	cudaMemcpy(hostWrite, deviceRead, MEM_SIZE, cudaMemcpyDeviceToHost);
+	printGrid(hostWrite, 1, "Result");
 
 	//Frees both the host and device grids
-	free(hostRead);
-	free(hostWrite);
+	cudaFreeHost(hostRead);
+	cudaFreeHost(hostWrite);
 	cudaFree(deviceRead);
 	cudaFree(deviceWrite);
 
@@ -69,7 +75,7 @@ void fillGrid(int* grid) {
 	//Fills in each inner cell in the grid with the product of its x and y position
 	for (int r = 1; r < THREAD_DIM - 1; r++) {
 		for (int c = 1; c < THREAD_DIM - 1; c++) {
-			grid[THREAD_DIM * r + c] = r * c;
+			grid[THREAD_DIM * r + c] = 1;
 		}
 	}
 }
@@ -85,10 +91,8 @@ __global__ void computeGrid(int* read, int* write) {
 		return;
 	}
 
-	write[THREAD_DIM * r + c] = read[THREAD_DIM * (r - 1) + c] +
-		read[THREAD_DIM * (r + 1) + c] +
-		read[THREAD_DIM * r + c - 1] +
-		read[THREAD_DIM * r + c + 1];
+	//Writes the sum of the neighbors to the cell
+	write[THREAD_DIM * r + c] = read[THREAD_DIM * (r - 1) + c] + read[THREAD_DIM * (r + 1) + c] + read[THREAD_DIM * r + c - 1] + read[THREAD_DIM * r + c + 1];
 }
 
 //Swaps the pointers of two grids
@@ -96,6 +100,19 @@ void swapGrids(int** read, int** write) {
 	int* temp = *read;
 	*read = *write;
 	*write = temp;
+}
+
+//Prints out the state of the internal grid (can also print entire grid)
+void printGrid(int* grid, int skip, const char* name) {
+	printf("<<< %s >>>\n\n", name);
+
+	for (int r = skip; r < THREAD_DIM - skip; r++) {
+		for (int c = skip; c < THREAD_DIM - skip; c++) {
+			printf("%-15d", grid[THREAD_DIM * r + c]);
+		}
+
+		printf("\n");
+	}
 }
 
 /*
@@ -205,18 +222,5 @@ __global__ void computeGrid(int* grid, int* result) {
 
 	//Put the sum of the neighbors in the result
 	*(result + THREAD_DIM * y + x) = *(grid + THREAD_DIM * (y - 1) + x) + *(grid + THREAD_DIM * (y + 1) + x) + *(grid + THREAD_DIM * y + x - 1) + *(grid + THREAD_DIM * y + x + 1);
-}
-
-//Prints out the state of the internal grid (can also print entire grid)
-void printGrid(int* grid, const char* name) {
-	printf("<<< %s >>>\n\n", name);
-
-	for (int y = 1; y < THREAD_DIM - 1; y++) {
-		for (int x = 1; x < THREAD_DIM - 1; x++) {
-			printf("%-10d", *(grid + THREAD_DIM * y + x));
-		}
-
-		printf("\n");
-	}
 }
 */
