@@ -1,99 +1,96 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <omp.h>
-#include <sys/time.h>
 
-#define SIZE 18000		//The size of the entire grid, including the outer edges
+#define SIZE 12
+#define MEM_SIZE (sizeof(int) * SIZE * SIZE)
+#define TIME_STEPS 1000000
 
-//Prototypes
 void fillGrid(int* grid);
 void computeGrid(int* grid, int* result);
-void printGrid(int* grid, char* name);
-
-static int createOutput = 0;
+void swapGrids(int** read, int** write);
+void printGrid(int* grid, int skip, char* name);
 
 int main() {
-	//Allocate memory for the grid (1D array) and the result grid
-	int* grid = malloc(SIZE * SIZE * sizeof(int));
-	int* result = malloc(SIZE * SIZE * sizeof(int));
+	//Allocates what would be "host" memory
+	int* hostRead = malloc(MEM_SIZE);
+	int* hostWrite = malloc(MEM_SIZE);
 
-	//Creates timers to be used
-	struct timeval start, end;
+	//Fill in the grid
+	fillGrid(hostRead);
 
-	//Fill in the grid, keeping time
-	gettimeofday(&start, NULL);
-	fillGrid(grid);
-	gettimeofday(&end, NULL);
-	long fillTime = (end.tv_usec + 1000000 * end.tv_sec) - (start.tv_usec + 1000000 * start.tv_sec);
+	//Allocates what would be "device" memory, copies input to deviceRead
+	int* deviceRead = malloc(MEM_SIZE);
+	int* deviceWrite = malloc(MEM_SIZE);
+	memcpy(deviceRead, hostRead, MEM_SIZE);
 
-	//Compute the grid, keeping time
-	gettimeofday(&start, NULL);
-	computeGrid(grid, result);
-	gettimeofday(&end, NULL);
-	long computeTime = (end.tv_usec + 1000000 * end.tv_sec) - (start.tv_usec + 1000000 * start.tv_sec);
-
-	//Prints out the elapsed times
-	printf("Fill time: %ldus\n", fillTime);
-	printf("Compute time: %ldus\n", computeTime);
-
-	//If output is enabled, do so
-	if (createOutput) {
-		//Print out state of the filled and result grids
-		printGrid(grid, "Filled");
-		printf("\n");
-		printGrid(result, "Result");
+	//Computes the grid, swapping read and write grids each time
+	for (int i = 0; i < TIME_STEPS; i++) {
+		computeGrid(deviceRead, deviceWrite);
+		swapGrids(&deviceRead, &deviceWrite);
 	}
 
+	//Copies over the result (now in deviceRead) from device to host
+	memcpy(hostWrite, deviceRead, MEM_SIZE);
+	printGrid(hostWrite, 1, "Result");
+
 	//Frees the memory used by the grids
-	free(grid);
-	free(result);
+	free(hostRead);
+	free(hostWrite);
+	free(deviceRead);
+	free(deviceWrite);
 
 	return 0;
 }
 
 //Fills in the grid based on a thread's position in the grid
 void fillGrid(int* grid) {
-	//Fills in the top and bottom rows
-	#pragma omp parallel for
-	for (int x = 0; x < SIZE; x++) {
-		*(grid + x) = 0;
-		*(grid + SIZE * (SIZE - 1) + x) = 0;
-	}
-
 	//Fills in the leftmost and rightmost columns
 	#pragma omp parallel for
 	for (int y = 0; y < SIZE; y++) {
-		*(grid + SIZE * y) = 0;
-		*(grid + SIZE * y + SIZE - 1) = 0;
+		grid[SIZE * y] = grid[SIZE * y + SIZE - 1] = 0;
 	}
 
-	//Fills in each spot of the grid with a cells product of its x and y position
+	//Fills in the top and bottom rows
+	#pragma omp parallel for
+	for (int x = 0; x < SIZE; x++) {
+		grid[x] = grid[SIZE * (SIZE - 1) + x] = 0;
+	}
+
+	//Fills in each spot of the grid with a 1
 	#pragma omp parallel for collapse(2)
 	for (int y = 1; y < SIZE - 1; y++) {
 		for (int x = 1; x < SIZE - 1; x++) {
-			*(grid + SIZE * y + x) = x * y;
+			grid[SIZE * y + x] = 1;
 		}
 	}
 }
 
-//Computes the result grid by adding all neighbors
-void computeGrid(int* grid, int* result) {
+//Computes the result grid by adding all neighbors of a cell and storing the sum in the cell
+void computeGrid(int* read, int* write) {
 	#pragma omp parallel for collapse(2)
 	for (int y = 1; y < SIZE - 1; y++) {
 		for (int x = 1; x < SIZE - 1; x++) {
-			//Gets each of the neighbor's values, add them together
-			*(result + SIZE * y + x) = *(grid + SIZE * (y - 1) + x) + *(grid + SIZE * (y + 1) + x) + *(grid + SIZE * y + x - 1) + *(grid + SIZE * y + x + 1);
+			write[SIZE * y + x] = read[SIZE * (y - 1) + x] + read[SIZE * (y + 1) + x] + read[SIZE * y + x - 1] + read[SIZE * y + x + 1];
 		}
 	}
+}
+
+//Swaps the pointers of two grids
+void swapGrids(int** read, int** write) {
+	int* temp = *read;
+	*read = *write;
+	*write = temp;
 }
 
 //Prints out the state of the internal grid (can also print entire grid)
-void printGrid(int* grid, char* name) {
+void printGrid(int* grid, int skip, char* name) {
 	printf("<<< %s >>>\n\n", name);
 
-	for (int y = 1; y < SIZE - 1; y++) {
-		for (int x = 1; x < SIZE - 1; x++) {
-			printf("%-10d", *(grid + SIZE * y + x));
+	for (int y = skip; y < SIZE - skip; y++) {
+		for (int x = skip; x < SIZE - skip; x++) {
+			printf("%-15d", grid[SIZE * y + x]);
 		}
 
 		printf("\n");
