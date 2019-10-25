@@ -4,7 +4,7 @@
 #include "device_launch_parameters.h"
 
 #define THREAD_DIM 12
-#define GRID_DIM 5
+#define GRID_DIM 2
 #define BLOCK_DIM ((THREAD_DIM - 2) / GRID_DIM)
 #define MEM_SIZE (sizeof(int) * THREAD_DIM * THREAD_DIM)
 #define TIME_STEPS 1000000
@@ -15,7 +15,8 @@ void swapGrids(int** read, int** write);
 void printGrid(int* grid, int skip, const char* name);
 
 int main() {
-	if ((THREAD_DIM - 2) / GRID_DIM != 0) {
+	//Checks for a valid grid dimension
+	if ((THREAD_DIM - 2) % GRID_DIM != 0) {
 		printf("Error: bad grid/thread dimensions.\n");
 		return 1;
 	}
