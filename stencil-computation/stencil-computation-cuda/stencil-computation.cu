@@ -22,7 +22,7 @@ int main() {
 	}
 
 	//Allocates space on the host for the grids in pinned memory
-	//Using pinned memory is much faster, only being limited by the speed of the PCI-E bus
+	//Using	memory is much faster, only being limited by the speed of the PCI-E bus
 	int* hostRead;
 	int* hostWrite;
 	cudaMallocHost((void**) &hostRead, MEM_SIZE);

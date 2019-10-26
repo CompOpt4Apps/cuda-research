@@ -1,0 +1,19 @@
+Report
+------
+-Variants
+	-Serial (baseline)
+	-OpenMP
+	-CUDA (pinned and unpinned, use flags)
+
+-Experiments
+	-CUDA speedup relative to serial
+	-OpenMP speedup relative to serial
+	-List CUDA memory transfer times (pinned vs unpinned)
+	-OpenMP vary thread count
+	-Maybe think about doing varying grid size
+	-Switch to floating point numbers
+	-Alter grid size to take up near entirety of memory
+	-Implement a verification technique
+	-Use OpenMP's timer
+	-Talk about machine specifications and how the programs are compiled (version of gcc/nvcc as well)
+	-Add confidence intervals to charts (+-)
