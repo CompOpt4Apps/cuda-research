@@ -1,6 +1,0 @@
-Notes
------
--Trying to figure out how long it takes for the device memory to come back over
--Timers for: allocation, creating data, execution of the kernels, copying data from GPU back to CPU
--Implement timesteps for running kernel multiple times (start with 100)
-
