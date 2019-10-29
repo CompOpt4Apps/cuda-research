@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
 
 #define SIZE 18000		//The size of the entire grid, including the outer edges
 
@@ -9,39 +8,21 @@ void fillGrid(int* grid);
 void computeGrid(int* grid, int* result);
 void printGrid(int* grid, char* name);
 
-static int createOutput = 0;
-
 int main() {
 	//Allocate memory for the grid (1D array) and the result grid
 	int* grid = malloc(SIZE * SIZE * sizeof(int));
 	int* result = malloc(SIZE * SIZE * sizeof(int));
 
-	//Creates timers to be used
-	struct timeval start, end;
-
 	//Fill in the grid, keeping time
-	gettimeofday(&start, NULL);
 	fillGrid(grid);
-	gettimeofday(&end, NULL);
-	long fillTime = (end.tv_usec + 1000000 * end.tv_sec) - (start.tv_usec + 1000000 * start.tv_sec);
 
 	//Compute the grid, keeping time
-	gettimeofday(&start, NULL);
 	computeGrid(grid, result);
-	gettimeofday(&end, NULL);
-	long computeTime = (end.tv_usec + 1000000 * end.tv_sec) - (start.tv_usec + 1000000 * start.tv_sec);
 
-	//Prints out the elapsed times
-	printf("Fill time: %ldus\n", fillTime);
-	printf("Compute time: %ldus\n", computeTime);
-
-	//If output is enabled, do so
-	if (createOutput) {
-		//Print out state of the filled and result grids
-		printGrid(grid, "Filled");
-		printf("\n");
-		printGrid(result, "Result");		
-	}
+	//Print out state of the filled and result grids
+	printGrid(grid, "Filled");
+	printf("\n");
+	printGrid(result, "Result");		
 
 	//Frees the memory used by the grids
 	free(grid);
