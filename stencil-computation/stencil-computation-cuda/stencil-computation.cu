@@ -6,8 +6,8 @@
 
 #define SIZE 16384				//Length and width of inner grid in threads
 #define DIM (SIZE + 2)			//Length and width of the entire grid in threads
-#define GRID_SIZE 512 			//Length and width of inner grid in blocks
-#define BLOCK_SIZE 32 			//Length and width of block in threads
+#define GRID_SIZE 1024 			//Length and width of inner grid in blocks
+#define BLOCK_SIZE 16 			//Length and width of block in threads
 #define MEM_SIZE (sizeof(float) * DIM * DIM)
 #define TIME_STEPS 50
 
