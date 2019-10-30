@@ -1,75 +1,90 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-#define SIZE 18000		//The size of the entire grid, including the outer edges
+#define SIZE 16384				//Length and width of inner grid in cells
+#define DIM (SIZE + 2)			//Length and width of the entire grid
+#define MEM_SIZE (sizeof(float) * DIM * DIM)
+#define TIME_STEPS 50
 
-//Prototypes
-void fillGrid(int* grid);
-void computeGrid(int* grid, int* result);
-void printGrid(int* grid, char* name);
+void fillGrid(float* grid);
+void computeGrid(float* read, float* write);
+void swapGrids(float** read, float** write);
+void printGrid(float* grid, const char* name);
 
-int main() {
-	//Allocate memory for the grid (1D array) and the result grid
-	int* grid = malloc(SIZE * SIZE * sizeof(int));
-	int* result = malloc(SIZE * SIZE * sizeof(int));
+int main(void) {
+	//Allocate memory for the read and write grid
+	float* read = malloc(MEM_SIZE);
+	float* write = malloc(MEM_SIZE);
+	assert(read != NULL && write != NULL);
 
-	//Fill in the grid, keeping time
-	fillGrid(grid);
+	//Fill in the read grid
+	fillGrid(read);
 
-	//Compute the grid, keeping time
-	computeGrid(grid, result);
+	//Compute the write grid TIME_STEPS times
+	//Finally, swap the grids 1 last time to get result into write grid
+	for (int i = 0; i < TIME_STEPS; i++) {
+		computeGrid(read, write);
+		swapGrids(&read, &write);
+	}
+	swapGrids(&read, &write);
 
-	//Print out state of the filled and result grids
-	printGrid(grid, "Filled");
-	printf("\n");
-	printGrid(result, "Result");		
+	//Print out state of write grid
+	//printGrid(write, "Result");
 
 	//Frees the memory used by the grids
-	free(grid);
-	free(result);
+	free(read);
+	free(write);
 
 	return 0;
 }
 
 //Fills in the grid based on a thread's position in the grid
-void fillGrid(int* grid) {
-	//Fills in the top and bottom rows
-	for (int x = 0; x < SIZE; x++) {
-		*(grid + x) = 0;
-		*(grid + SIZE * (SIZE - 1) + x) = 0;
-	}
-
+void fillGrid(float* grid) {
 	//Fills in the leftmost and rightmost columns
-	for (int y = 0; y < SIZE; y++) {
-		*(grid + SIZE * y) = 0;
-		*(grid + SIZE * y + SIZE - 1) = 0;
+	for (int y = 0; y < DIM; y++) {
+		grid[DIM * y] = grid[DIM * y + DIM - 1] = 0;
 	}
 
-	//Fills in each spot of the grid with a cells product of its x and y position
-	for (int y = 1; y < SIZE - 1; y++) {
-		for (int x = 1; x < SIZE - 1; x++) {
-			*(grid + SIZE * y + x) = x * y;
+	//Fills in the top and bottom rows
+	for (int x = 0; x < DIM; x++) {
+		grid[x] = grid[DIM * (DIM - 1) + x] = 0;
+	}
+
+	//Fills in each spot of the inner grid with 1.1
+	for (int y = 1; y < DIM - 1; y++) {
+		for (int x = 1; x < DIM - 1; x++) {
+			grid[DIM * y + x] = 1.1;
 		}
 	}
 }
 
-//Computes the result grid by adding all neighbors
-void computeGrid(int* grid, int* result) {
-	for (int y = 1; y < SIZE - 1; y++) {
-		for (int x = 1; x < SIZE - 1; x++) {
-			//Gets each of the neighbor's values, add them together
-			*(result + SIZE * y + x) = *(grid + SIZE * (y - 1) + x) + *(grid + SIZE * (y + 1) + x) + *(grid + SIZE * y + x - 1) + *(grid + SIZE * y + x + 1);
+//Computes the write grid by adding all neighboring cells
+void computeGrid(float* read, float* write) {
+	//The result of a cell is the sum of its neighbors
+	for (int y = 1; y < DIM - 1; y++) {
+		for (int x = 1; x < DIM - 1; x++) {
+			write[DIM * y + x] = read[DIM * (y - 1) + x] + read[DIM * (y + 1) + x] + read[DIM * y + x - 1] + read[DIM * y + x + 1];
 		}
 	}
 }
 
-//Prints out the state of the internal grid (can also print entire grid)
-void printGrid(int* grid, char* name) {
+//Swaps the pointers of two grids
+void swapGrids(float** read, float** write) {
+	float* temp = *read;
+	*read = *write;
+	*write = temp;
+}
+
+//prints out the state of the internal grid (can also print entire grid)
+void printGrid(float* grid, const char* name) {
+	//Prints the name of the grid
 	printf("<<< %s >>>\n\n", name);
 
-	for (int y = 1; y < SIZE - 1; y++) {
-		for (int x = 1; x < SIZE - 1; x++) {
-			printf("%-10d", *(grid + SIZE * y + x));
+	//Prints the inner grid
+	for (int y = 1; y < DIM - 1; y++) {
+		for (int x = 1; x < DIM - 1; x++) {
+			printf("%-25.3f", grid[DIM * y + x]);
 		}
 
 		printf("\n");
