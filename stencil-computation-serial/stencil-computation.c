@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define SIZE 16384				//Length and width of inner grid in cells
+#define SIZE 30000				//Length and width of inner grid in cells
 #define DIM (SIZE + 2)			//Length and width of the entire grid
 #define MEM_SIZE (sizeof(float) * DIM * DIM)
-#define TIME_STEPS 50
+#define TIME_STEPS 10
 
 void fillGrid(float* grid);
 void computeGrid(float* read, float* write);

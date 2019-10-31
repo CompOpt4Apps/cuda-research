@@ -3,10 +3,11 @@
 #include <assert.h>
 #include <omp.h>
 
-#define SIZE 16384				//Length and width of inner grid in cells
+#define SIZE 30000				//Length and width of inner grid in cells
 #define DIM (SIZE + 2)			//Length and width of the entire grid
 #define MEM_SIZE (sizeof(float) * DIM * DIM)
-#define TIME_STEPS 50
+#define TIME_STEPS 10
+#define NUM_THREADS 14
 
 void fillGrid(float* grid);
 void computeGrid(float* read, float* write);
@@ -14,6 +15,12 @@ void swapGrids(float** read, float** write);
 void printGrid(float* grid, const char* name);
 
 int main(void) {
+	//Disables dynamic teams to force the max number of threads to always be used
+	omp_set_dynamic(0);
+
+	//Sets the max number of threads to use for all parallel operations
+	omp_set_num_threads(NUM_THREADS);
+
 	//Allocate memory for the read and write grid
 	float* read = malloc(MEM_SIZE);
 	float* write = malloc(MEM_SIZE);
@@ -30,6 +37,7 @@ int main(void) {
 	}
 	swapGrids(&read, &write);
 
+
 	//Print out state of write grid
 	//printGrid(write, "Result");
 
@@ -43,19 +51,16 @@ int main(void) {
 //Fills in the grid based on a thread's position in the grid
 void fillGrid(float* grid) {
 	//Fills in the leftmost and rightmost columns
-	#pragma omp parallel for
 	for (int y = 0; y < DIM; y++) {
 		grid[DIM * y] = grid[DIM * y + DIM - 1] = 0;
 	}
 
 	//Fills in the top and bottom rows
-	#pragma omp parallel for
 	for (int x = 0; x < DIM; x++) {
 		grid[x] = grid[DIM * (DIM - 1) + x] = 0;
 	}
 
 	//Fills in each spot of the inner grid with a 1.1
-	#pragma omp parallel for collapse(2)
 	for (int y = 1; y < DIM - 1; y++) {
 		for (int x = 1; x < DIM - 1; x++) {
 			grid[DIM * y + x] = 1.1;
