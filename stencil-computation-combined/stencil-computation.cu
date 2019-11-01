@@ -30,24 +30,24 @@ const int NUM_THREADS = 16;								//Controls the number of threads used by Open
 //Performs the execution of each implementation and the comparison of each result
 int main(void) {
 	//Executes each implementation and gets each result
-	//float* serial = executeSerialImplementation();
-	//float* omp = executeOpenMPImplementation();
-	executeCUDAImplementation();
+	float* serial = executeSerialImplementation();
+	float* omp = executeOpenMPImplementation();
+	float* cuda = executeCUDAImplementation();
 
 	//Compares the results of each implementation
 	//Transitively, if a == b and b == c, we already know a == c
-	//verify(serial, omp);
-	//verify(omp, cuda);
+	verify(serial, omp);
+	verify(omp, cuda);
 
 	//Frees the write grids after verification
-	//free(serial);
-	//free(omp);
-	//if (PINNED) {
-	//	cudaFreeHost(cuda);
-	//}
-	//else {
-	//	free(cuda);
-	//}
+	free(serial);
+	free(omp);
+	if (PINNED) {
+		cudaFreeHost(cuda);
+	}
+	else {
+		free(cuda);
+	}
 
 	return 0;
 }
@@ -166,11 +166,8 @@ static float* executeCUDAImplementation(void) {
 		assert(cudaMallocHost((void**) &hostWrite, MEM_SIZE) == cudaSuccess);
 	}
 	else {
-		double start = omp_get_wtime();
 		hostRead = (float*) malloc(MEM_SIZE);
 		hostWrite = (float*) malloc(MEM_SIZE);
-		double end = omp_get_wtime();
-		printf("Total CUDA host allocation time: %.5lf seconds\n", end - start);
 		assert(hostRead != NULL && hostWrite != NULL);
 	}
 
@@ -201,14 +198,9 @@ static float* executeCUDAImplementation(void) {
 	//Frees all but the host write grid
 	if (PINNED) {
 		cudaFreeHost(hostRead);
-		cudaFreeHost(hostWrite);
 	}
 	else {
-		double start = omp_get_wtime();
 		free(hostRead);
-		free(hostWrite);
-		double end = omp_get_wtime();
-		printf("Total CUDA host free time: %.5lf seconds\n", end - start);
 	}
 	cudaFree(deviceRead);
 	cudaFree(deviceWrite);
