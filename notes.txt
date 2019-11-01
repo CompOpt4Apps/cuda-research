@@ -17,3 +17,5 @@ Report
 	-Use OpenMP's timer
 	-Talk about machine specifications and how the programs are compiled (version of gcc/nvcc as well)
 	-Add confidence intervals to charts (+-)
+
+
