@@ -1,0 +1,480 @@
+1
+----------------------------
+==1110== NVPROF is profiling process 1110, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24547 seconds
+==1110== Profiling application: ./exec
+==1110== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.02%  1.66999s         1  1.66999s  1.66999s  1.66999s  [CUDA memcpy DtoH]
+                   16.07%  394.66ms        10  39.466ms  39.446ms  39.496ms  computeCUDAGrid(float*, float*)
+                   15.91%  390.55ms         1  390.55ms  390.55ms  390.55ms  [CUDA memcpy HtoD]
+      API calls:   78.96%  2.06140s         2  1.03070s  390.62ms  1.67077s  cudaMemcpy
+                   15.12%  394.70ms        10  39.470ms  39.449ms  39.517ms  cudaDeviceSynchronize
+                    5.50%  143.46ms         2  71.731ms  2.5005ms  140.96ms  cudaMalloc
+                    0.40%  10.473ms         2  5.2365ms  2.1351ms  8.3380ms  cudaFree
+                    0.01%  348.90us        94  3.7110us     132ns  152.72us  cuDeviceGetAttribute
+                    0.01%  132.66us         1  132.66us  132.66us  132.66us  cuDeviceTotalMem
+                    0.00%  97.804us        10  9.7800us  5.6270us  39.858us  cudaLaunch
+                    0.00%  37.566us         1  37.566us  37.566us  37.566us  cuDeviceGetName
+                    0.00%  8.1760us        20     408ns     116ns  5.3070us  cudaSetupArgument
+                    0.00%  4.0860us        10     408ns     217ns  1.8490us  cudaConfigureCall
+                    0.00%  1.5640us         3     521ns     121ns  1.2200us  cuDeviceGetCount
+                    0.00%     714ns         2     357ns     152ns     562ns  cuDeviceGet
+
+2
+----------------------------
+==1123== NVPROF is profiling process 1123, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24546 seconds
+==1123== Profiling application: ./exec
+==1123== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.08%  1.66976s         1  1.66976s  1.66976s  1.66976s  [CUDA memcpy DtoH]
+                   16.07%  394.13ms        10  39.413ms  39.390ms  39.452ms  computeCUDAGrid(float*, float*)
+                   15.85%  388.75ms         1  388.75ms  388.75ms  388.75ms  [CUDA memcpy HtoD]
+      API calls:   79.16%  2.05937s         2  1.02968s  388.82ms  1.67054s  cudaMemcpy
+                   15.15%  394.18ms        10  39.418ms  39.392ms  39.457ms  cudaDeviceSynchronize
+                    5.27%  137.13ms         2  68.563ms  2.5040ms  134.62ms  cudaMalloc
+                    0.40%  10.419ms         2  5.2095ms  2.1146ms  8.3045ms  cudaFree
+                    0.01%  265.04us        94  2.8190us     130ns  114.40us  cuDeviceGetAttribute
+                    0.00%  125.15us         1  125.15us  125.15us  125.15us  cuDeviceTotalMem
+                    0.00%  94.747us        10  9.4740us  5.2290us  40.432us  cudaLaunch
+                    0.00%  30.110us         1  30.110us  30.110us  30.110us  cuDeviceGetName
+                    0.00%  8.0570us        20     402ns     111ns  5.1140us  cudaSetupArgument
+                    0.00%  3.7730us        10     377ns     166ns  1.9630us  cudaConfigureCall
+                    0.00%  1.6790us         3     559ns     122ns  1.3200us  cuDeviceGetCount
+                    0.00%     735ns         2     367ns     162ns     573ns  cuDeviceGet
+
+3
+----------------------------
+==1135== NVPROF is profiling process 1135, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24507 seconds
+==1135== Profiling application: ./exec
+==1135== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.03%  1.66765s         1  1.66765s  1.66765s  1.66765s  [CUDA memcpy DtoH]
+                   16.08%  394.07ms        10  39.407ms  39.384ms  39.442ms  computeCUDAGrid(float*, float*)
+                   15.90%  389.69ms         1  389.69ms  389.69ms  389.69ms  [CUDA memcpy HtoD]
+      API calls:   79.13%  2.05820s         2  1.02910s  389.77ms  1.66843s  cudaMemcpy
+                   15.15%  394.11ms        10  39.411ms  39.386ms  39.455ms  cudaDeviceSynchronize
+                    5.29%  137.72ms         2  68.862ms  2.4989ms  135.22ms  cudaMalloc
+                    0.40%  10.446ms         2  5.2228ms  2.1293ms  8.3162ms  cudaFree
+                    0.01%  266.94us        94  2.8390us     131ns  115.10us  cuDeviceGetAttribute
+                    0.00%  124.98us         1  124.98us  124.98us  124.98us  cuDeviceTotalMem
+                    0.00%  94.959us        10  9.4950us  4.8980us  41.134us  cudaLaunch
+                    0.00%  30.925us         1  30.925us  30.925us  30.925us  cuDeviceGetName
+                    0.00%  8.1060us        20     405ns     111ns  5.3780us  cudaSetupArgument
+                    0.00%  3.3960us        10     339ns     151ns  1.7670us  cudaConfigureCall
+                    0.00%  1.7550us         3     585ns     128ns  1.3570us  cuDeviceGetCount
+                    0.00%     851ns         2     425ns     184ns     667ns  cuDeviceGet
+
+4
+----------------------------
+==1147== NVPROF is profiling process 1147, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24554 seconds
+==1147== Profiling application: ./exec
+==1147== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.02%  1.66757s         1  1.66757s  1.66757s  1.66757s  [CUDA memcpy DtoH]
+                   16.07%  394.03ms        10  39.403ms  39.380ms  39.441ms  computeCUDAGrid(float*, float*)
+                   15.91%  390.12ms         1  390.12ms  390.12ms  390.12ms  [CUDA memcpy HtoD]
+      API calls:   79.18%  2.05854s         2  1.02927s  390.19ms  1.66835s  cudaMemcpy
+                   15.16%  394.07ms        10  39.407ms  39.382ms  39.443ms  cudaDeviceSynchronize
+                    5.24%  136.33ms         2  68.165ms  2.4985ms  133.83ms  cudaMalloc
+                    0.40%  10.437ms         2  5.2184ms  2.1280ms  8.3088ms  cudaFree
+                    0.01%  265.90us        94  2.8280us     132ns  114.96us  cuDeviceGetAttribute
+                    0.00%  125.44us         1  125.44us  125.44us  125.44us  cuDeviceTotalMem
+                    0.00%  93.462us        10  9.3460us  5.0910us  40.149us  cudaLaunch
+                    0.00%  31.688us         1  31.688us  31.688us  31.688us  cuDeviceGetName
+                    0.00%  8.0260us        20     401ns     111ns  5.3150us  cudaSetupArgument
+                    0.00%  3.5760us        10     357ns     151ns  1.9180us  cudaConfigureCall
+                    0.00%  1.6810us         3     560ns     132ns  1.1250us  cuDeviceGetCount
+                    0.00%     898ns         2     449ns     203ns     695ns  cuDeviceGet
+
+5
+----------------------------
+==1159== NVPROF is profiling process 1159, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24591 seconds
+==1159== Profiling application: ./exec
+==1159== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.08%  1.66709s         1  1.66709s  1.66709s  1.66709s  [CUDA memcpy DtoH]
+                   16.09%  394.11ms        10  39.411ms  39.379ms  39.456ms  computeCUDAGrid(float*, float*)
+                   15.83%  387.69ms         1  387.69ms  387.69ms  387.69ms  [CUDA memcpy HtoD]
+      API calls:   79.15%  2.05564s         2  1.02782s  387.77ms  1.66787s  cudaMemcpy
+                   15.18%  394.15ms        10  39.415ms  39.381ms  39.459ms  cudaDeviceSynchronize
+                    5.25%  136.40ms         2  68.201ms  2.4848ms  133.92ms  cudaMalloc
+                    0.40%  10.450ms         2  5.2252ms  2.1350ms  8.3155ms  cudaFree
+                    0.01%  264.53us        94  2.8140us     134ns  114.26us  cuDeviceGetAttribute
+                    0.00%  124.90us         1  124.90us  124.90us  124.90us  cuDeviceTotalMem
+                    0.00%  103.00us        10  10.299us  6.2060us  40.139us  cudaLaunch
+                    0.00%  30.217us         1  30.217us  30.217us  30.217us  cuDeviceGetName
+                    0.00%  7.8860us        20     394ns     111ns  4.8140us  cudaSetupArgument
+                    0.00%  3.7390us        10     373ns     152ns  1.9250us  cudaConfigureCall
+                    0.00%  1.6900us         3     563ns     144ns  1.3120us  cuDeviceGetCount
+                    0.00%     754ns         2     377ns     155ns     599ns  cuDeviceGet
+
+6
+----------------------------
+==1172== NVPROF is profiling process 1172, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24500 seconds
+==1172== Profiling application: ./exec
+==1172== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.99%  1.66622s         1  1.66622s  1.66622s  1.66622s  [CUDA memcpy DtoH]
+                   16.08%  394.07ms        10  39.407ms  39.390ms  39.420ms  computeCUDAGrid(float*, float*)
+                   15.93%  390.41ms         1  390.41ms  390.41ms  390.41ms  [CUDA memcpy HtoD]
+      API calls:   79.16%  2.05749s         2  1.02874s  390.48ms  1.66701s  cudaMemcpy
+                   15.16%  394.15ms        10  39.415ms  39.392ms  39.472ms  cudaDeviceSynchronize
+                    5.25%  136.55ms         2  68.274ms  2.4998ms  134.05ms  cudaMalloc
+                    0.40%  10.436ms         2  5.2179ms  2.1296ms  8.3061ms  cudaFree
+                    0.01%  266.69us        94  2.8370us     131ns  115.19us  cuDeviceGetAttribute
+                    0.00%  125.71us         1  125.71us  125.71us  125.71us  cuDeviceTotalMem
+                    0.00%  100.76us        10  10.076us  6.0130us  39.492us  cudaLaunch
+                    0.00%  31.155us         1  31.155us  31.155us  31.155us  cuDeviceGetName
+                    0.00%  7.6810us        20     384ns     111ns  4.9350us  cudaSetupArgument
+                    0.00%  4.1150us        10     411ns     232ns  1.7560us  cudaConfigureCall
+                    0.00%  1.5920us         3     530ns     122ns  1.2740us  cuDeviceGetCount
+                    0.00%     836ns         2     418ns     181ns     655ns  cuDeviceGet
+
+7
+----------------------------
+==1185== NVPROF is profiling process 1185, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24594 seconds
+==1185== Profiling application: ./exec
+==1185== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.00%  1.66799s         1  1.66799s  1.66799s  1.66799s  [CUDA memcpy DtoH]
+                   16.07%  394.24ms        10  39.424ms  39.369ms  39.515ms  computeCUDAGrid(float*, float*)
+                   15.93%  390.74ms         1  390.74ms  390.74ms  390.74ms  [CUDA memcpy HtoD]
+      API calls:   79.11%  2.05959s         2  1.02980s  390.82ms  1.66877s  cudaMemcpy
+                   15.14%  394.28ms        10  39.428ms  39.372ms  39.517ms  cudaDeviceSynchronize
+                    5.32%  138.62ms         2  69.312ms  2.4960ms  136.13ms  cudaMalloc
+                    0.40%  10.444ms         2  5.2220ms  2.1262ms  8.3178ms  cudaFree
+                    0.01%  264.79us        94  2.8160us     128ns  114.28us  cuDeviceGetAttribute
+                    0.00%  124.99us         1  124.99us  124.99us  124.99us  cuDeviceTotalMem
+                    0.00%  97.744us        10  9.7740us  5.7080us  39.669us  cudaLaunch
+                    0.00%  30.302us         1  30.302us  30.302us  30.302us  cuDeviceGetName
+                    0.00%  8.7760us        20     438ns     112ns  5.9720us  cudaSetupArgument
+                    0.00%  3.4820us        10     348ns     179ns  1.5610us  cudaConfigureCall
+                    0.00%  1.5710us         3     523ns     163ns  1.1850us  cuDeviceGetCount
+                    0.00%     766ns         2     383ns     170ns     596ns  cuDeviceGet
+
+8
+----------------------------
+==1200== NVPROF is profiling process 1200, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24584 seconds
+==1200== Profiling application: ./exec
+==1200== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.98%  1.66621s         1  1.66621s  1.66621s  1.66621s  [CUDA memcpy DtoH]
+                   16.10%  394.69ms        10  39.469ms  39.398ms  39.562ms  computeCUDAGrid(float*, float*)
+                   15.91%  389.96ms         1  389.96ms  389.96ms  389.96ms  [CUDA memcpy HtoD]
+      API calls:   79.16%  2.05703s         2  1.02852s  390.03ms  1.66700s  cudaMemcpy
+                   15.19%  394.74ms        10  39.474ms  39.401ms  39.564ms  cudaDeviceSynchronize
+                    5.27%  136.95ms         2  68.475ms  2.4999ms  134.45ms  cudaMalloc
+                    0.36%  9.3915ms         2  4.6958ms  2.1230ms  7.2685ms  cudaFree
+                    0.01%  293.73us        94  3.1240us     133ns  139.97us  cuDeviceGetAttribute
+                    0.00%  125.20us         1  125.20us  125.20us  125.20us  cuDeviceTotalMem
+                    0.00%  98.745us        10  9.8740us  5.3290us  39.859us  cudaLaunch
+                    0.00%  30.815us         1  30.815us  30.815us  30.815us  cuDeviceGetName
+                    0.00%  7.9790us        20     398ns     110ns  5.1670us  cudaSetupArgument
+                    0.00%  3.8630us        10     386ns     144ns  2.0330us  cudaConfigureCall
+                    0.00%  1.6490us         3     549ns     124ns  1.3370us  cuDeviceGetCount
+                    0.00%     723ns         2     361ns     155ns     568ns  cuDeviceGet
+
+9
+----------------------------
+==1218== NVPROF is profiling process 1218, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24560 seconds
+==1218== Profiling application: ./exec
+==1218== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.04%  1.66851s         1  1.66851s  1.66851s  1.66851s  [CUDA memcpy DtoH]
+                   16.12%  395.18ms        10  39.518ms  39.511ms  39.532ms  computeCUDAGrid(float*, float*)
+                   15.84%  388.42ms         1  388.42ms  388.42ms  388.42ms  [CUDA memcpy HtoD]
+      API calls:   79.14%  2.05778s         2  1.02889s  388.49ms  1.66929s  cudaMemcpy
+                   15.20%  395.22ms        10  39.522ms  39.513ms  39.534ms  cudaDeviceSynchronize
+                    5.24%  136.28ms         2  68.140ms  2.4997ms  133.78ms  cudaMalloc
+                    0.40%  10.471ms         2  5.2356ms  2.1322ms  8.3389ms  cudaFree
+                    0.01%  265.10us        94  2.8200us     131ns  114.50us  cuDeviceGetAttribute
+                    0.00%  124.52us         1  124.52us  124.52us  124.52us  cuDeviceTotalMem
+                    0.00%  92.517us        10  9.2510us  5.1450us  39.075us  cudaLaunch
+                    0.00%  30.244us         1  30.244us  30.244us  30.244us  cuDeviceGetName
+                    0.00%  8.5640us        20     428ns     111ns  5.6830us  cudaSetupArgument
+                    0.00%  3.5660us        10     356ns     148ns  1.8640us  cudaConfigureCall
+                    0.00%  1.6250us         3     541ns     179ns  1.1860us  cuDeviceGetCount
+                    0.00%     810ns         2     405ns     150ns     660ns  cuDeviceGet
+
+10
+----------------------------
+==1232== NVPROF is profiling process 1232, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24580 seconds
+==1232== Profiling application: ./exec
+==1232== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.00%  1.66810s         1  1.66810s  1.66810s  1.66810s  [CUDA memcpy DtoH]
+                   16.11%  395.17ms        10  39.517ms  39.484ms  39.543ms  computeCUDAGrid(float*, float*)
+                   15.90%  389.99ms         1  389.99ms  389.99ms  389.99ms  [CUDA memcpy HtoD]
+      API calls:   79.13%  2.05894s         2  1.02947s  390.06ms  1.66888s  cudaMemcpy
+                   15.19%  395.22ms        10  39.522ms  39.487ms  39.548ms  cudaDeviceSynchronize
+                    5.26%  136.80ms         2  68.400ms  2.5006ms  134.30ms  cudaMalloc
+                    0.40%  10.437ms         2  5.2183ms  2.1280ms  8.3085ms  cudaFree
+                    0.01%  266.36us        94  2.8330us     134ns  114.62us  cuDeviceGetAttribute
+                    0.00%  125.13us         1  125.13us  125.13us  125.13us  cuDeviceTotalMem
+                    0.00%  98.662us        10  9.8660us  5.1090us  38.669us  cudaLaunch
+                    0.00%  31.080us         1  31.080us  31.080us  31.080us  cuDeviceGetName
+                    0.00%  8.0840us        20     404ns     110ns  5.0630us  cudaSetupArgument
+                    0.00%  3.6640us        10     366ns     142ns  1.8540us  cudaConfigureCall
+                    0.00%  1.6070us         3     535ns     130ns  1.1440us  cuDeviceGetCount
+                    0.00%     832ns         2     416ns     207ns     625ns  cuDeviceGet
+
+11
+----------------------------
+==1253== NVPROF is profiling process 1253, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24559 seconds
+==1253== Profiling application: ./exec
+==1253== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.99%  1.66680s         1  1.66680s  1.66680s  1.66680s  [CUDA memcpy DtoH]
+                   16.12%  395.23ms        10  39.523ms  39.497ms  39.549ms  computeCUDAGrid(float*, float*)
+                   15.89%  389.58ms         1  389.58ms  389.58ms  389.58ms  [CUDA memcpy HtoD]
+      API calls:   79.16%  2.05724s         2  1.02862s  389.66ms  1.66758s  cudaMemcpy
+                   15.21%  395.26ms        10  39.526ms  39.499ms  39.552ms  cudaDeviceSynchronize
+                    5.25%  136.38ms         2  68.191ms  2.4913ms  133.89ms  cudaMalloc
+                    0.36%  9.4113ms         2  4.7056ms  2.1288ms  7.2825ms  cudaFree
+                    0.01%  265.99us        94  2.8290us     134ns  114.36us  cuDeviceGetAttribute
+                    0.00%  124.78us         1  124.78us  124.78us  124.78us  cuDeviceTotalMem
+                    0.00%  108.86us        10  10.886us  5.3690us  52.369us  cudaLaunch
+                    0.00%  30.220us         1  30.220us  30.220us  30.220us  cuDeviceGetName
+                    0.00%  7.7600us        20     388ns     111ns  4.7040us  cudaSetupArgument
+                    0.00%  3.6110us        10     361ns     157ns  1.8240us  cudaConfigureCall
+                    0.00%  1.5470us         3     515ns     126ns  1.2260us  cuDeviceGetCount
+                    0.00%     805ns         2     402ns     217ns     588ns  cuDeviceGet
+
+12
+----------------------------
+==1265== NVPROF is profiling process 1265, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24549 seconds
+==1265== Profiling application: ./exec
+==1265== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.00%  1.67059s         1  1.67059s  1.67059s  1.67059s  [CUDA memcpy DtoH]
+                   16.09%  395.35ms        10  39.535ms  39.495ms  39.648ms  computeCUDAGrid(float*, float*)
+                   15.91%  390.91ms         1  390.91ms  390.91ms  390.91ms  [CUDA memcpy HtoD]
+      API calls:   79.11%  2.06236s         2  1.03118s  390.98ms  1.67138s  cudaMemcpy
+                   15.17%  395.39ms        10  39.539ms  39.497ms  39.650ms  cudaDeviceSynchronize
+                    5.31%  138.33ms         2  69.167ms  2.4776ms  135.86ms  cudaMalloc
+                    0.40%  10.435ms         2  5.2177ms  2.1273ms  8.3080ms  cudaFree
+                    0.01%  267.76us        94  2.8480us     131ns  115.21us  cuDeviceGetAttribute
+                    0.01%  133.80us         1  133.80us  133.80us  133.80us  cuDeviceTotalMem
+                    0.00%  92.657us        10  9.2650us  5.2590us  39.191us  cudaLaunch
+                    0.00%  30.659us         1  30.659us  30.659us  30.659us  cuDeviceGetName
+                    0.00%  8.6020us        20     430ns     132ns  5.5450us  cudaSetupArgument
+                    0.00%  3.6990us        10     369ns     157ns  1.9950us  cudaConfigureCall
+                    0.00%  1.4810us         3     493ns     133ns  1.1070us  cuDeviceGetCount
+                    0.00%     976ns         2     488ns     185ns     791ns  cuDeviceGet
+
+13
+----------------------------
+==1291== NVPROF is profiling process 1291, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24599 seconds
+==1291== Profiling application: ./exec
+==1291== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.82%  1.66734s         1  1.66734s  1.66734s  1.66734s  [CUDA memcpy DtoH]
+                   16.11%  396.00ms         1  396.00ms  396.00ms  396.00ms  [CUDA memcpy HtoD]
+                   16.07%  395.16ms        10  39.516ms  39.503ms  39.554ms  computeCUDAGrid(float*, float*)
+      API calls:   79.17%  2.06419s         2  1.03209s  396.07ms  1.66812s  cudaMemcpy
+                   15.16%  395.20ms        10  39.520ms  39.505ms  39.556ms  cudaDeviceSynchronize
+                    5.25%  136.97ms         2  68.487ms  2.5021ms  134.47ms  cudaMalloc
+                    0.40%  10.446ms         2  5.2231ms  2.1290ms  8.3173ms  cudaFree
+                    0.01%  266.17us        94  2.8310us     130ns  114.68us  cuDeviceGetAttribute
+                    0.00%  124.71us         1  124.71us  124.71us  124.71us  cuDeviceTotalMem
+                    0.00%  96.405us        10  9.6400us  4.9630us  40.432us  cudaLaunch
+                    0.00%  30.450us         1  30.450us  30.450us  30.450us  cuDeviceGetName
+                    0.00%  8.3560us        20     417ns     127ns  5.4070us  cudaSetupArgument
+                    0.00%  4.2580us        10     425ns     164ns  2.4250us  cudaConfigureCall
+                    0.00%  1.7050us         3     568ns     154ns  1.3650us  cuDeviceGetCount
+                    0.00%     775ns         2     387ns     130ns     645ns  cuDeviceGet
+
+14
+----------------------------
+==1316== NVPROF is profiling process 1316, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24537 seconds
+==1316== Profiling application: ./exec
+==1316== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.96%  1.67187s         1  1.67187s  1.67187s  1.67187s  [CUDA memcpy DtoH]
+                   16.07%  395.19ms        10  39.519ms  39.504ms  39.543ms  computeCUDAGrid(float*, float*)
+                   15.97%  392.84ms         1  392.84ms  392.84ms  392.84ms  [CUDA memcpy HtoD]
+      API calls:   79.14%  2.06556s         2  1.03278s  392.92ms  1.67265s  cudaMemcpy
+                   15.14%  395.23ms        10  39.523ms  39.506ms  39.545ms  cudaDeviceSynchronize
+                    5.29%  138.16ms         2  69.078ms  2.4987ms  135.66ms  cudaMalloc
+                    0.40%  10.427ms         2  5.2136ms  2.1207ms  8.3065ms  cudaFree
+                    0.01%  282.40us        94  3.0040us     131ns  129.29us  cuDeviceGetAttribute
+                    0.00%  125.24us         1  125.24us  125.24us  125.24us  cuDeviceTotalMem
+                    0.00%  99.411us        10  9.9410us  5.7480us  39.874us  cudaLaunch
+                    0.00%  30.316us         1  30.316us  30.316us  30.316us  cuDeviceGetName
+                    0.00%  7.6840us        20     384ns     119ns  4.5190us  cudaSetupArgument
+                    0.00%  3.8970us        10     389ns     199ns  1.9050us  cudaConfigureCall
+                    0.00%  1.6890us         3     563ns     149ns  1.2720us  cuDeviceGetCount
+                    0.00%     841ns         2     420ns     146ns     695ns  cuDeviceGet
+
+15
+----------------------------
+==1328== NVPROF is profiling process 1328, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24564 seconds
+==1328== Profiling application: ./exec
+==1328== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.03%  1.67075s         1  1.67075s  1.67075s  1.67075s  [CUDA memcpy DtoH]
+                   16.09%  395.19ms        10  39.519ms  39.499ms  39.547ms  computeCUDAGrid(float*, float*)
+                   15.88%  390.14ms         1  390.14ms  390.14ms  390.14ms  [CUDA memcpy HtoD]
+      API calls:   79.12%  2.06175s         2  1.03088s  390.21ms  1.67154s  cudaMemcpy
+                   15.17%  395.24ms        10  39.524ms  39.501ms  39.550ms  cudaDeviceSynchronize
+                    5.29%  137.78ms         2  68.889ms  2.5045ms  135.27ms  cudaMalloc
+                    0.40%  10.470ms         2  5.2352ms  2.1343ms  8.3361ms  cudaFree
+                    0.01%  297.74us        94  3.1670us     133ns  134.34us  cuDeviceGetAttribute
+                    0.00%  126.45us         1  126.45us  126.45us  126.45us  cuDeviceTotalMem
+                    0.00%  97.512us        10  9.7510us  5.6350us  39.442us  cudaLaunch
+                    0.00%  33.438us         1  33.438us  33.438us  33.438us  cuDeviceGetName
+                    0.00%  7.4350us        20     371ns     112ns  4.7590us  cudaSetupArgument
+                    0.00%  3.9650us        10     396ns     174ns  2.0290us  cudaConfigureCall
+                    0.00%  1.5840us         3     528ns     157ns  1.1910us  cuDeviceGetCount
+                    0.00%     804ns         2     402ns     170ns     634ns  cuDeviceGet
+
+16
+----------------------------
+==1341== NVPROF is profiling process 1341, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24590 seconds
+==1341== Profiling application: ./exec
+==1341== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.92%  1.66567s         1  1.66567s  1.66567s  1.66567s  [CUDA memcpy DtoH]
+                   16.11%  395.16ms        10  39.516ms  39.481ms  39.537ms  computeCUDAGrid(float*, float*)
+                   15.97%  391.54ms         1  391.54ms  391.54ms  391.54ms  [CUDA memcpy HtoD]
+      API calls:   79.13%  2.05807s         2  1.02903s  391.61ms  1.66646s  cudaMemcpy
+                   15.20%  395.20ms        10  39.520ms  39.483ms  39.539ms  cudaDeviceSynchronize
+                    5.25%  136.49ms         2  68.246ms  2.4907ms  134.00ms  cudaMalloc
+                    0.40%  10.432ms         2  5.2158ms  2.1270ms  8.3045ms  cudaFree
+                    0.01%  265.08us        94  2.8200us     131ns  114.29us  cuDeviceGetAttribute
+                    0.00%  124.87us         1  124.87us  124.87us  124.87us  cuDeviceTotalMem
+                    0.00%  97.359us        10  9.7350us  5.6780us  39.595us  cudaLaunch
+                    0.00%  30.400us         1  30.400us  30.400us  30.400us  cuDeviceGetName
+                    0.00%  8.3220us        20     416ns     133ns  4.9380us  cudaSetupArgument
+                    0.00%  5.0190us        10     501ns     265ns  2.2650us  cudaConfigureCall
+                    0.00%  1.8210us         3     607ns     156ns  1.3850us  cuDeviceGetCount
+                    0.00%     881ns         2     440ns     187ns     694ns  cuDeviceGet
+
+17
+----------------------------
+==1354== NVPROF is profiling process 1354, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24593 seconds
+==1354== Profiling application: ./exec
+==1354== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.99%  1.66691s         1  1.66691s  1.66691s  1.66691s  [CUDA memcpy DtoH]
+                   16.12%  395.26ms        10  39.526ms  39.497ms  39.552ms  computeCUDAGrid(float*, float*)
+                   15.89%  389.53ms         1  389.53ms  389.53ms  389.53ms  [CUDA memcpy HtoD]
+      API calls:   79.09%  2.05729s         2  1.02865s  389.60ms  1.66770s  cudaMemcpy
+                   15.20%  395.30ms        10  39.530ms  39.499ms  39.573ms  cudaDeviceSynchronize
+                    5.29%  137.48ms         2  68.742ms  2.4989ms  134.98ms  cudaMalloc
+                    0.40%  10.439ms         2  5.2193ms  2.1240ms  8.3146ms  cudaFree
+                    0.01%  304.18us        94  3.2350us     134ns  140.92us  cuDeviceGetAttribute
+                    0.00%  128.07us         1  128.07us  128.07us  128.07us  cuDeviceTotalMem
+                    0.00%  94.567us        10  9.4560us  5.3720us  38.999us  cudaLaunch
+                    0.00%  30.453us         1  30.453us  30.453us  30.453us  cuDeviceGetName
+                    0.00%  8.0610us        20     403ns     132ns  4.7680us  cudaSetupArgument
+                    0.00%  3.7690us        10     376ns     181ns  1.8720us  cudaConfigureCall
+                    0.00%  1.5940us         3     531ns     178ns  1.1520us  cuDeviceGetCount
+                    0.00%     776ns         2     388ns     145ns     631ns  cuDeviceGet
+
+18
+----------------------------
+==1366== NVPROF is profiling process 1366, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24585 seconds
+==1366== Profiling application: ./exec
+==1366== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.99%  1.66611s         1  1.66611s  1.66611s  1.66611s  [CUDA memcpy DtoH]
+                   16.13%  395.17ms        10  39.517ms  39.485ms  39.557ms  computeCUDAGrid(float*, float*)
+                   15.88%  389.18ms         1  389.18ms  389.18ms  389.18ms  [CUDA memcpy HtoD]
+      API calls:   79.06%  2.05616s         2  1.02808s  389.26ms  1.66689s  cudaMemcpy
+                   15.20%  395.24ms        10  39.524ms  39.488ms  39.570ms  cudaDeviceSynchronize
+                    5.32%  138.33ms         2  69.163ms  2.4758ms  135.85ms  cudaMalloc
+                    0.40%  10.450ms         2  5.2251ms  2.1359ms  8.3143ms  cudaFree
+                    0.01%  280.49us        94  2.9830us     133ns  127.88us  cuDeviceGetAttribute
+                    0.00%  125.80us         1  125.80us  125.80us  125.80us  cuDeviceTotalMem
+                    0.00%  94.785us        10  9.4780us  5.4050us  39.710us  cudaLaunch
+                    0.00%  31.190us         1  31.190us  31.190us  31.190us  cuDeviceGetName
+                    0.00%  7.7030us        20     385ns     113ns  4.7470us  cudaSetupArgument
+                    0.00%  3.9530us        10     395ns     131ns  2.3580us  cudaConfigureCall
+                    0.00%  1.8490us         3     616ns     156ns  1.4130us  cuDeviceGetCount
+                    0.00%     884ns         2     442ns     178ns     706ns  cuDeviceGet
+
+19
+----------------------------
+==1378== NVPROF is profiling process 1378, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24567 seconds
+==1378== Profiling application: ./exec
+==1378== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   68.07%  1.67028s         1  1.67028s  1.67028s  1.67028s  [CUDA memcpy DtoH]
+                   16.10%  395.09ms        10  39.509ms  39.479ms  39.532ms  computeCUDAGrid(float*, float*)
+                   15.83%  388.43ms         1  388.43ms  388.43ms  388.43ms  [CUDA memcpy HtoD]
+      API calls:   79.15%  2.05957s         2  1.02978s  388.50ms  1.67107s  cudaMemcpy
+                   15.18%  395.14ms        10  39.514ms  39.481ms  39.539ms  cudaDeviceSynchronize
+                    5.25%  136.49ms         2  68.247ms  2.4956ms  134.00ms  cudaMalloc
+                    0.40%  10.467ms         2  5.2334ms  2.1317ms  8.3352ms  cudaFree
+                    0.01%  291.80us        94  3.1040us     135ns  138.07us  cuDeviceGetAttribute
+                    0.00%  125.43us         1  125.43us  125.43us  125.43us  cuDeviceTotalMem
+                    0.00%  95.406us        10  9.5400us  5.5980us  39.655us  cudaLaunch
+                    0.00%  30.797us         1  30.797us  30.797us  30.797us  cuDeviceGetName
+                    0.00%  7.7590us        20     387ns     126ns  4.7350us  cudaSetupArgument
+                    0.00%  3.7820us        10     378ns     162ns  2.0510us  cudaConfigureCall
+                    0.00%  1.8890us         3     629ns     123ns  1.5030us  cuDeviceGetCount
+                    0.00%     723ns         2     361ns     155ns     568ns  cuDeviceGet
+
+20
+----------------------------
+==1390== NVPROF is profiling process 1390, command: ./exec
+Total CUDA host allocation time: 0.00001 seconds
+Total CUDA host free time: 0.24585 seconds
+==1390== Profiling application: ./exec
+==1390== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.88%  1.66698s         1  1.66698s  1.66698s  1.66698s  [CUDA memcpy DtoH]
+                   16.09%  395.23ms        10  39.523ms  39.483ms  39.546ms  computeCUDAGrid(float*, float*)
+                   16.03%  393.74ms         1  393.74ms  393.74ms  393.74ms  [CUDA memcpy HtoD]
+      API calls:   79.14%  2.06158s         2  1.03079s  393.82ms  1.66777s  cudaMemcpy
+                   15.17%  395.27ms        10  39.527ms  39.485ms  39.558ms  cudaDeviceSynchronize
+                    5.26%  137.02ms         2  68.508ms  2.4800ms  134.54ms  cudaMalloc
+                    0.40%  10.456ms         2  5.2281ms  2.1379ms  8.3183ms  cudaFree
+                    0.01%  290.24us        94  3.0870us     133ns  125.78us  cuDeviceGetAttribute
+                    0.00%  126.16us         1  126.16us  126.16us  126.16us  cuDeviceTotalMem
+                    0.00%  94.664us        10  9.4660us  5.3150us  40.685us  cudaLaunch
+                    0.00%  35.035us         1  35.035us  35.035us  35.035us  cuDeviceGetName
+                    0.00%  8.8150us        20     440ns     144ns  5.4400us  cudaSetupArgument
+                    0.00%  3.8840us        10     388ns     169ns  2.0500us  cudaConfigureCall
+                    0.00%  1.8810us         3     627ns     141ns  1.5580us  cuDeviceGetCount
+                    0.00%     817ns         2     408ns     151ns     666ns  cuDeviceGet
+

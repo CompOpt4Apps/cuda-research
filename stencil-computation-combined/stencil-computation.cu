@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <assert.h>
 #include <omp.h>
@@ -22,31 +23,31 @@ const int DIM = SIZE + 2;								//Length and width of the entire grid in thread
 const int GRID_SIZE = 1500;								//Length and width of inner grid in blocks
 const int BLOCK_SIZE = 20;								//Length and width of block in threads
 const size_t MEM_SIZE = sizeof(float) * DIM * DIM;		//Amount of memory used by a single grid
-const int TIME_STEPS = 1;								//Number of time steps to perform
-const int PINNED = 1;									//Controls using pinned and unpinned CUDA host memory
+const int TIME_STEPS = 10;								//Number of time steps to perform
+const int PINNED = 0;									//Controls using pinned and unpinned CUDA host memory
 const int NUM_THREADS = 16;								//Controls the number of threads used by OpenMP
 
 //Performs the execution of each implementation and the comparison of each result
 int main(void) {
 	//Executes each implementation and gets each result
-	float* a = executeSerialImplementation();
-	float* b = executeOpenMPImplementation();
-	float* c = executeCUDAImplementation();
+	//float* serial = executeSerialImplementation();
+	//float* omp = executeOpenMPImplementation();
+	executeCUDAImplementation();
 
 	//Compares the results of each implementation
 	//Transitively, if a == b and b == c, we already know a == c
-	verify(a, b);
-	verify(b, c);
+	//verify(serial, omp);
+	//verify(omp, cuda);
 
 	//Frees the write grids after verification
-	free(a);
-	free(b);
-	if (PINNED) {
-		cudaFreeHost(c);
-	}
-	else {
-		free(c);
-	}
+	//free(serial);
+	//free(omp);
+	//if (PINNED) {
+	//	cudaFreeHost(cuda);
+	//}
+	//else {
+	//	free(cuda);
+	//}
 
 	return 0;
 }
@@ -61,13 +62,25 @@ static float* executeSerialImplementation(void) {
 	//Fill in the read grid
 	fillGrid(read);
 
+	//These variables keep track of the amount of time it takes for the grid computation to take
+	double serialComputeTime = 0;
+	double start;
+	double end;
+
 	//Compute the write grid TIME_STEPS times
 	//Finally, swap the grids 1 last time to get result into write grid
 	for (int i = 0; i < TIME_STEPS; i++) {
+		start = omp_get_wtime();
 		computeSerialGrid(read, write);
+		end = omp_get_wtime();
+
+		serialComputeTime += end - start;
 		swapGrids(&read, &write);
 	}
 	swapGrids(&read, &write);
+
+	//Prints out the timing information
+	printf("Total serial compute time: %.5lf seconds\n", serialComputeTime);
 
 	//Free all but the write grid
 	free(read);
@@ -101,13 +114,25 @@ static float* executeOpenMPImplementation(void) {
 	//Fill in the read grid
 	fillGrid(read);
 
+	//These variables keep track of the amount of time it takes for the grid computation to take
+	double ompComputeTime = 0;
+	double start;
+	double end;
+
 	//Compute the write grid TIME_STEPS times
 	//Finally, swap the grids 1 last time to get result into write grid
 	for (int i = 0; i < TIME_STEPS; i++) {
+		start = omp_get_wtime();
 		computeOpenMPGrid(read, write);
+		end = omp_get_wtime();
+
+		ompComputeTime += end - start;
 		swapGrids(&read, &write);
 	}
 	swapGrids(&read, &write);
+
+	//Prints out the timing information
+	printf("Total OpenMP compute time: %.5lf seconds\n", ompComputeTime);
 
 	//Frees all but the write grid
 	free(read);
@@ -141,8 +166,11 @@ static float* executeCUDAImplementation(void) {
 		assert(cudaMallocHost((void**) &hostWrite, MEM_SIZE) == cudaSuccess);
 	}
 	else {
+		double start = omp_get_wtime();
 		hostRead = (float*) malloc(MEM_SIZE);
 		hostWrite = (float*) malloc(MEM_SIZE);
+		double end = omp_get_wtime();
+		printf("Total CUDA host allocation time: %.5lf seconds\n", end - start);
 		assert(hostRead != NULL && hostWrite != NULL);
 	}
 
@@ -173,14 +201,19 @@ static float* executeCUDAImplementation(void) {
 	//Frees all but the host write grid
 	if (PINNED) {
 		cudaFreeHost(hostRead);
+		cudaFreeHost(hostWrite);
 	}
 	else {
+		double start = omp_get_wtime();
 		free(hostRead);
+		free(hostWrite);
+		double end = omp_get_wtime();
+		printf("Total CUDA host free time: %.5lf seconds\n", end - start);
 	}
 	cudaFree(deviceRead);
 	cudaFree(deviceWrite);
 
-	return hostWrite;
+	return NULL;
 }
 
 //Performs a parallelized stencil computation using CUDA cores
